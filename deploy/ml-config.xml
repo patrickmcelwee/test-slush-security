@@ -458,9 +458,9 @@
   </certificates>
   <roles xmlns="http://marklogic.com/xdmp/security">
     <role>
-      <role-name>${app-role}</role-name>
-      <description>A role for users of the ${app-name} application</description>
+      <role-name>super-${app-role}</role-name>
       <role-names>
+        <role-name>${app-role}</role-name>
       </role-names>
       <permissions>
         <permission>
@@ -480,15 +480,31 @@
           <role-name>${app-role}</role-name>
         </permission>
       </permissions>
+      <privileges>
+        <privilege>
+          <privilege-name>rest-writer</privilege-name>
+        </privilege>
+        <privilege>
+          <privilege-name>rest-reader</privilege-name>
+        </privilege>
+      </privileges>
+    </role>
+    <role>
+      <role-name>${app-role}</role-name>
+      <description>A role for users of the ${app-name} application</description>
+      <role-names>
+      </role-names>
+      <permissions>
+        <permission>
+          <capability>read</capability>
+          <role-name>${app-role}</role-name>
+        </permission>
+      </permissions>
       <collections>
       </collections>
       <privileges>
         <privilege>
           <privilege-name>rest-reader</privilege-name>
-        </privilege>
-        <!-- remove the rest-writer privilege if read-only access is required -->
-        <privilege>
-          <privilege-name>rest-writer</privilege-name>
         </privilege>
       </privileges>
 
@@ -500,10 +516,24 @@
       <description>A user for the ${app-name} application</description>
       <password>${appuser-password}</password>
       <role-names>
+        <role-name>super-${app-role}</role-name>
         <role-name>${app-role}</role-name>
       </role-names>
+      <privileges>
+        <privilege>
+          <privilege-name>rest-writer</privilege-name>
+        </privilege>
+      </privileges>
       <permissions/>
       <collections/>
+    </user>
+    <user>
+      <user-name>test-slush-security-guest</user-name>
+      <description>User with minimal permissions</description>
+      <password>password</password>
+      <role-names>
+        <role-name>${app-role}</role-name>
+      </role-names>
     </user>
   </users>
   <amps xmlns="http://marklogic.com/xdmp/security">
